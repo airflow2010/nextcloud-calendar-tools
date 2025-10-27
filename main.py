@@ -47,9 +47,9 @@ except Exception:
 # ========= Regeln anpassen =========
 # Liste aus (regex_pattern, hex_farbe, make_free_bool)
 RULES = [
-    (r"^Mittagspause$",              "#88cc88", True),
-    (r"^Focus( |$)|^Deep\s*Work$",   "#5b9bd5", True),
-    (r"^Heartbeat$",                 "#ff9900", True),
+    (r"^T7$",   "khaki", True),
+    (r"^T6$",   "khaki", True),
+    (r"^N$",    "khaki", True),
     # Weitere Beispiele:
     # (r".*Urlaub.*",                  "#f39c12", False),
 ]
