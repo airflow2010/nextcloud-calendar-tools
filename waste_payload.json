@@ -1,0 +1,206 @@
+{
+  "garbageCollectionDays": [
+    {
+      "garbagePlanId": "6761584e36764e06d7104218",
+      "name": "Biomüll",
+      "date": "2025-10-29T00:00:00.000Z",
+      "garbageTypeSettings": {
+        "_id": "6761580436764e06d70fc4a0",
+        "garbageType": "organic_waste",
+        "displayName": "Biomüll",
+        "abbreviation": "BM",
+        "icon": "https://cdn.citiesapps.com/assets/icons/waste-management/organic_waste-icon.png",
+        "color": "#FFFFFF",
+        "backgroundColor": "#94634D"
+      }
+    },
+    {
+      "garbagePlanId": "6761584e36764e06d7104219",
+      "name": "Altpapier",
+      "date": "2025-11-05T00:00:00.000Z",
+      "garbageTypeSettings": {
+        "_id": "6761580436764e06d70fc4a1",
+        "garbageType": "paper",
+        "displayName": "Papier",
+        "abbreviation": "P",
+        "icon": "https://cdn.citiesapps.com/assets/icons/waste-management/paper-icon.png",
+        "color": "#FFFFFF",
+        "backgroundColor": "#B33A36"
+      }
+    },
+    {
+      "garbagePlanId": "6761584e36764e06d7104219",
+      "name": "Altpapier",
+      "date": "2025-11-06T00:00:00.000Z",
+      "garbageTypeSettings": {
+        "_id": "6761580436764e06d70fc4a1",
+        "garbageType": "paper",
+        "displayName": "Papier",
+        "abbreviation": "P",
+        "icon": "https://cdn.citiesapps.com/assets/icons/waste-management/paper-icon.png",
+        "color": "#FFFFFF",
+        "backgroundColor": "#B33A36"
+      }
+    },
+    {
+      "garbagePlanId": "6761584e36764e06d7104216",
+      "name": "Gelber Sack Rayon 1",
+      "date": "2025-11-12T00:00:00.000Z",
+      "garbageTypeSettings": {
+        "_id": "6761580436764e06d70fc49d",
+        "garbageType": "light_waste",
+        "displayName": "Gelber Sack",
+        "abbreviation": "GS",
+        "icon": "https://cdn.citiesapps.com/assets/icons/waste-management/light_waste-icon.png",
+        "color": "#FFFFFF",
+        "backgroundColor": "#E6BF12"
+      }
+    },
+    {
+      "garbagePlanId": "6761584e36764e06d7104218",
+      "name": "Biomüll",
+      "date": "2025-11-12T00:00:00.000Z",
+      "garbageTypeSettings": {
+        "_id": "6761580436764e06d70fc4a0",
+        "garbageType": "organic_waste",
+        "displayName": "Biomüll",
+        "abbreviation": "BM",
+        "icon": "https://cdn.citiesapps.com/assets/icons/waste-management/organic_waste-icon.png",
+        "color": "#FFFFFF",
+        "backgroundColor": "#94634D"
+      }
+    },
+    {
+      "garbagePlanId": "6761584e36764e06d7104214",
+      "name": "Restmüll Rayon 1",
+      "date": "2025-11-21T00:00:00.000Z",
+      "garbageTypeSettings": {
+        "_id": "6761580436764e06d70fc4a2",
+        "garbageType": "residual_waste",
+        "displayName": "Restmüll",
+        "abbreviation": "RM",
+        "icon": "https://cdn.citiesapps.com/assets/icons/waste-management/residual_waste-icon.png",
+        "color": "#FFFFFF",
+        "backgroundColor": "#262626"
+      }
+    },
+    {
+      "garbagePlanId": "6761584e36764e06d7104218",
+      "name": "Biomüll",
+      "date": "2025-11-26T00:00:00.000Z",
+      "garbageTypeSettings": {
+        "_id": "6761580436764e06d70fc4a0",
+        "garbageType": "organic_waste",
+        "displayName": "Biomüll",
+        "abbreviation": "BM",
+        "icon": "https://cdn.citiesapps.com/assets/icons/waste-management/organic_waste-icon.png",
+        "color": "#FFFFFF",
+        "backgroundColor": "#94634D"
+      }
+    },
+    {
+      "garbagePlanId": "6761584e36764e06d7104216",
+      "name": "Gelber Sack Rayon 1",
+      "date": "2025-12-10T00:00:00.000Z",
+      "garbageTypeSettings": {
+        "_id": "6761580436764e06d70fc49d",
+        "garbageType": "light_waste",
+        "displayName": "Gelber Sack",
+        "abbreviation": "GS",
+        "icon": "https://cdn.citiesapps.com/assets/icons/waste-management/light_waste-icon.png",
+        "color": "#FFFFFF",
+        "backgroundColor": "#E6BF12"
+      }
+    },
+    {
+      "garbagePlanId": "6761584e36764e06d7104218",
+      "name": "Biomüll",
+      "date": "2025-12-10T00:00:00.000Z",
+      "garbageTypeSettings": {
+        "_id": "6761580436764e06d70fc4a0",
+        "garbageType": "organic_waste",
+        "displayName": "Biomüll",
+        "abbreviation": "BM",
+        "icon": "https://cdn.citiesapps.com/assets/icons/waste-management/organic_waste-icon.png",
+        "color": "#FFFFFF",
+        "backgroundColor": "#94634D"
+      }
+    },
+    {
+      "garbagePlanId": "6761584e36764e06d7104214",
+      "name": "Restmüll Rayon 1",
+      "date": "2025-12-19T00:00:00.000Z",
+      "garbageTypeSettings": {
+        "_id": "6761580436764e06d70fc4a2",
+        "garbageType": "residual_waste",
+        "displayName": "Restmüll",
+        "abbreviation": "RM",
+        "icon": "https://cdn.citiesapps.com/assets/icons/waste-management/residual_waste-icon.png",
+        "color": "#FFFFFF",
+        "backgroundColor": "#262626"
+      }
+    },
+    {
+      "garbagePlanId": "6761584e36764e06d7104218",
+      "name": "Biomüll",
+      "date": "2025-12-24T00:00:00.000Z",
+      "garbageTypeSettings": {
+        "_id": "6761580436764e06d70fc4a0",
+        "garbageType": "organic_waste",
+        "displayName": "Biomüll",
+        "abbreviation": "BM",
+        "icon": "https://cdn.citiesapps.com/assets/icons/waste-management/organic_waste-icon.png",
+        "color": "#FFFFFF",
+        "backgroundColor": "#94634D"
+      }
+    },
+    {
+      "garbagePlanId": "6761584e36764e06d7104219",
+      "name": "Altpapier",
+      "date": "2025-12-29T00:00:00.000Z",
+      "garbageTypeSettings": {
+        "_id": "6761580436764e06d70fc4a1",
+        "garbageType": "paper",
+        "displayName": "Papier",
+        "abbreviation": "P",
+        "icon": "https://cdn.citiesapps.com/assets/icons/waste-management/paper-icon.png",
+        "color": "#FFFFFF",
+        "backgroundColor": "#B33A36"
+      }
+    },
+    {
+      "garbagePlanId": "6761584e36764e06d7104219",
+      "name": "Altpapier",
+      "date": "2025-12-30T00:00:00.000Z",
+      "garbageTypeSettings": {
+        "_id": "6761580436764e06d70fc4a1",
+        "garbageType": "paper",
+        "displayName": "Papier",
+        "abbreviation": "P",
+        "icon": "https://cdn.citiesapps.com/assets/icons/waste-management/paper-icon.png",
+        "color": "#FFFFFF",
+        "backgroundColor": "#B33A36"
+      }
+    }
+  ],
+  "publicHolidays": [
+    {
+      "name": "Allerheiligen",
+      "date": "2025-11-01T00:00:00.000Z"
+    },
+    {
+      "name": "Mariä Empfängnis",
+      "date": "2025-12-08T00:00:00.000Z"
+    },
+    {
+      "name": "Weihnachten",
+      "date": "2025-12-25T00:00:00.000Z"
+    },
+    {
+      "name": "2. Weihnachtstag",
+      "date": "2025-12-26T00:00:00.000Z"
+    }
+  ],
+  "street": "Institutsgasse",
+  "addressNumber": null
+}

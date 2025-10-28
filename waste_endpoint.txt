@@ -1,0 +1,1 @@
+https://api.v2.citiesapps.com/waste-management/areas/6761584e36764e06d7104231/calendar
