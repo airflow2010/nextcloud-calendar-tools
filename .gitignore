@@ -14,5 +14,6 @@ Thumbs.db
 
 # App
 .env
-waste_institutsgasse.csv
+*.csv
+*.ics
 trace.zip
