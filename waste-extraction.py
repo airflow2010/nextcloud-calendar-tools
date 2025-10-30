@@ -1,14 +1,25 @@
 import requests
 import json
 from datetime import datetime, timedelta
-from ics import Calendar, Event
+from icalendar import Calendar, Event, Alarm
 import sys # Importiert für sys.exit() bei Fehlern
+import uuid # Für eindeutige IDs
 
 # --- Konfiguration ---
 area_id = "6761584e36764e06d7104231" # Institutsgasse
 filter_types = [] # Leer für alle Typen, z.B. ["Biomüll", "Restmüll"]
+#filter_types = ["Restmüll", "Papier", "Gelber Sack"] # FP needs
 ics_filename = "muelltermine.ics"
 base_page_url = "https://bad-fischau-brunn.at/waste-management/areas" # URL der Webseite
+
+# Farben für die Müllarten (Hex-Codes oder Farbnamen)
+WASTE_TYPE_COLORS = {
+    "Restmüll": "dimgrey",          # Dunkelgrau
+    "Papier": "floralwhite",        # Papierweiß
+    "Gelber Sack": "gold",          # Gelb
+    "Biomüll": "saddlebrown",       # Braun
+    "DEFAULT": "black"              # Schwarz
+}
 # --- Ende Konfiguration ---
 
 def get_dynamic_build_version(url):
@@ -130,6 +141,11 @@ if calendar_data:
     # ICS-Datei erstellen
     print(f"\n--- Erstelle ICS-Datei ({ics_filename}) ---")
     cal = Calendar()
+    # Notwendige Standard-Properties für den Kalender selbst
+    cal.add('prodid', '-//My Waste Calendar Script//EN')
+    cal.add('version', '2.0')
+    cal.add('calscale', 'GREGORIAN')
+
     ics_event_count = 0
     if events_to_process:
         for event_data in events_to_process:
@@ -137,17 +153,32 @@ if calendar_data:
             summary = event_data.get("garbageTypeSettings", {}).get("displayName", "Müllabholung")
             try:
                 start_dt = datetime.fromisoformat(date_str.replace('Z', '+00:00'))
-                e = Event()
-                e.name = summary
-                e.begin = start_dt.date()
-                e.make_all_day()
-                cal.events.add(e)
+                event = Event()
+                event.add('summary', summary)
+                event.add('dtstart', start_dt.date())
+                event.add('dtend', start_dt.date() + timedelta(days=1))
+                # WICHTIG: Eindeutige ID (UID) und Zeitstempel (DTSTAMP) hinzufügen
+                # UID wird aus Datum und Müllart generiert, um bei erneutem Lauf stabil zu sein
+                event.add('uid', f"{start_dt.strftime('%Y%m%d')}-{summary.replace(' ', '-')}@waste.script")
+                event.add('dtstamp', datetime.now())
+                # Farbe basierend auf dem Typ (summary) hinzufügen
+                color = WASTE_TYPE_COLORS.get(summary, WASTE_TYPE_COLORS["DEFAULT"])
+                event.add('color', color)
+
+                # NEU: Erinnerung hinzufügen (18:00 am Vortag)
+                alarm = Alarm()
+                alarm.add('action', 'DISPLAY')
+                alarm.add('description', f"Müll rausstellen: {summary}")
+                alarm.add('trigger', timedelta(hours=-6)) # 6 Stunden VOR dem Start (00:00) -> 18:00 am Vortag
+                event.add_component(alarm)
+
+                cal.add_component(event)
                 ics_event_count += 1
             except (ValueError, TypeError) as err:
                  print(f"Fehler beim Erstellen des Kalendereintrags für {summary} am {date_str}: {err}")
         try:
-            with open(ics_filename, 'w', encoding='utf-8') as f:
-                f.writelines(cal.serialize_iter())
+            with open(ics_filename, 'wb') as f:
+                f.write(cal.to_ical())
             print(f"ICS-Datei '{ics_filename}' mit {ics_event_count} Terminen erfolgreich erstellt.")
         except IOError as e:
             print(f"Fehler beim Schreiben der ICS-Datei '{ics_filename}': {e}")
