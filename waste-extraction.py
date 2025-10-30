@@ -15,7 +15,7 @@ base_page_url = "https://bad-fischau-brunn.at/waste-management/areas" # URL der 
 # Farben für die Müllarten (Hex-Codes oder Farbnamen)
 WASTE_TYPE_COLORS = {
     "Restmüll": "dimgrey",          # Dunkelgrau
-    "Papier": "floralwhite",        # Papierweiß
+    "Papier": "forestgreen",        # Grün
     "Gelber Sack": "gold",          # Gelb
     "Biomüll": "saddlebrown",       # Braun
     "DEFAULT": "black"              # Schwarz
