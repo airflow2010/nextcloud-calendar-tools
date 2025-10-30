@@ -142,7 +142,7 @@ if calendar_data:
     print(f"\n--- Erstelle ICS-Datei ({ics_filename}) ---")
     cal = Calendar()
     # Notwendige Standard-Properties für den Kalender selbst
-    cal.add('prodid', '-//My Waste Calendar Script//EN')
+    cal.add('prodid', '-//https://github.com/airflow2010/nextcloud-calendar-tools//EN')
     cal.add('version', '2.0')
     cal.add('calscale', 'GREGORIAN')
 
