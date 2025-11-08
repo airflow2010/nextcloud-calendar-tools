@@ -6,13 +6,7 @@ Basic tools for pimping my typical tasks in NC calendar
 - Verbindet sich zum NextCloud Kalender
 - Nutzt WebDAV/CalDAV API
 - Setzt Farben und Verfügbarkeit nach Regeln
-
-## Setup
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-```
+- Scripte für Terminerstellung aus 3rd-party Quelle
 
 ## Anwendung
 
@@ -28,9 +22,9 @@ Gefundene Kalenderobjekte: 365
 Done. Checked=299 matched_files=66 updated=0 already_ok=66 failed_put=0
 ```
 
-### waste-extraction.py (Termine abrufen)
+### waste-extraction.py (Termine für Müllabholung)
 
-Dieses separate Script dient ausschließlich der Extrahierung der Termine für die Müllabholung in meiner Straße in meiner Gemeinde. Das Script könnte aber auch leicht an andere Lokationen angepasst werden, solange die Gemeinde ihre Dienste via der citiesapp anbietet.
+Dieses separate Script dient ausschließlich der Extrahierung der Termine für die Müllabholung in meiner Straße in meiner Gemeinde. Die Termine werden dann als ICS-File zur Verfügung gestellt, welche dann einfach in beliebige Applikationen geladen werden können. Das Script könnte aber auch leicht an andere Lokationen angepasst werden, solange die Gemeinde ihre Dienste via der citiesapp anbietet.
 
 ```bash
 (.venv) airflow@AQUARIUS:~/Documents/python-projekte/nextcloud-calendar-tools$ python gemini.py
@@ -53,4 +47,28 @@ Filter aktiv für: Restmüll, Papier, Gelber Sack
 
 --- Erstelle ICS-Datei (muelltermine.ics) ---
 ICS-Datei 'muelltermine.ics' mit 8 Terminen erfolgreich erstellt.
+```
+
+### heurigen-extraction.py (Termine für Heurige)
+
+Dieses Skript extrahiert die "Ausg'steckt is"-Termine des Heurigenkalenders der Gemeinde und speichert sie in einer `heurigen.ics`-Datei.
+
+```bash
+(.venv) airflow@AQUARIUS:~/Documents/python-projekte/nextcloud-calendar-tools$ python heurigen-extraction.py 
+Versuche, die aktuelle build-version von https://bad-fischau-brunn.at/wirtschaft/heurigenkalender abzurufen...
+Aktuelle build-version gefunden: 20251105143942-b347190a6352d885b1cfd4ddd96969d2ed269444
+
+Rufe API auf: https://api.v2.citiesapps.com/events
+Verwende Parameter: {'event-period': 'upcoming', 'scope': 'page:66c703b250d3917f19d8fae0', 'pagination': 'limit:50'}
+Status Code: 200
+4 Events in diesem Durchlauf, insgesamt 4.
+
+--- Termine zur Kontrolle ---
+17.11.2025 11:00: Fam. Leeb Andrea und Thomas
+26.11.2025 16:00: Fam. Sederl
+01.12.2025 11:00: Alte Feuerwehr
+28.12.2025 11:00: Fam. Flechl
+
+--- Erstelle ICS-Datei (heurigen.ics) ---
+ICS-Datei 'heurigen.ics' mit 4 Terminen erfolgreich erstellt.
 ```
