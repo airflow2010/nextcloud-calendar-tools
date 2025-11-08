@@ -19,8 +19,6 @@ API_QUERY_PARAMS = {
 ICS_FILENAME = "heurigen.ics"
 BASE_PAGE_URL = "https://bad-fischau-brunn.at/wirtschaft/heurigenkalender"
 
-# Standardfarbe für die neuen Termine
-DEFAULT_EVENT_COLOR = "darkgoldenrod" # Passende Farbe für Heurigen
 # --- Ende Konfiguration ---
 
 def get_dynamic_build_version(url):
@@ -155,7 +153,7 @@ except Exception:
 print("\n--- Termine zur Kontrolle ---")
 if events_to_process:
     for event in events_to_process:
-        event_name = event.get("name", "Unbenannter Termin")
+        event_name = event.get("name", "Unbenannter Termin").removeprefix("Ausgsteckt is: ").strip()
         start_str = event.get('startsAt') or event.get('startsAtDate')
         start_dt = parse_iso_datetime(start_str)
         if start_dt and EVENT_TIMEZONE:
@@ -184,36 +182,33 @@ ics_event_count = 0
 
 if events_to_process:
     for event_data in events_to_process:
-        summary = event_data.get("name", "Termin")
-        has_start_time = event_data.get("hasStartTime", True)
-        start_str = event_data.get("startsAt" if has_start_time else "startsAtDate") or event_data.get("startsAt") or event_data.get("startsAtDate")
-        end_str = event_data.get("endsAt" if event_data.get("hasEndTime") else "endsAtDate") or event_data.get("endsAt") or event_data.get("endsAtDate")
+        summary = event_data.get("name", "Unbenannter Termin").removeprefix("Ausgsteckt is: ").strip()
+        start_str = event_data.get("startsAt") or event_data.get("startsAtDate")
+        end_str = event_data.get("endsAt") or event_data.get("endsAtDate")
 
         if not start_str:
             print(f"Überspringe '{summary}', kein Startdatum gefunden.")
             continue
 
         start_dt = parse_iso_datetime(start_str)
+        end_dt = parse_iso_datetime(end_str) if end_str else None
+
         if not start_dt:
             print(f"Überspringe '{summary}', Startdatum '{start_str}' konnte nicht interpretiert werden.")
             continue
 
         event = Event()
         event.add('summary', summary)
-
-        if has_start_time:
-            event.add('dtstart', start_dt)
-            if end_str:
-                end_dt = parse_iso_datetime(end_str)
-                if end_dt:
-                    event.add('dtend', end_dt)
+        
+        event.add('dtstart', start_dt.date())
+        
+        # Für Ganztagstermine ist das Enddatum exklusiv.
+        # Wenn ein Event am 15. endet, muss dtend der 16. sein.
+        if end_dt:
+            event.add('dtend', end_dt.date() + timedelta(days=1))
         else:
-            event.add('dtstart', start_dt.date())
-            end_dt = parse_iso_datetime(end_str) if end_str else None
-            if end_dt:
-                event.add('dtend', end_dt.date())
-            else:
-                event.add('dtend', start_dt.date() + timedelta(days=1))
+            # Wenn kein Enddatum da ist, dauert es genau einen Tag.
+            event.add('dtend', start_dt.date() + timedelta(days=1))
 
         description_text = extract_plain_description(event_data)
         location_details = event_data.get("locationDetails")
@@ -233,7 +228,6 @@ if events_to_process:
         event_id = event_data.get("_id", str(uuid.uuid4()))
         event.add('uid', f"{event_id}@heurigen.script")
         event.add('dtstamp', datetime.now(timezone.utc))
-        event.add('color', DEFAULT_EVENT_COLOR)
 
         cal.add_component(event)
         ics_event_count += 1
