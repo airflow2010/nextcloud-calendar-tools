@@ -47,9 +47,11 @@ except Exception:
 # ========= Regeln anpassen =========
 # Liste aus (regex_pattern, hex_farbe, make_free_bool)
 RULES = [
+    (r"^T8$",   "khaki", True),
     (r"^T7$",   "khaki", True),
     (r"^T6$",   "khaki", True),
     (r"^N$",    "khaki", True),
+    (r"^Teambesprechung$",   "khaki", True),
     # Weitere Beispiele:
     # (r".*Urlaub.*",                  "#f39c12", False),
 ]
