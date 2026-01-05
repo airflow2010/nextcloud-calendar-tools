@@ -27,7 +27,7 @@ Done. Checked=299 matched_files=66 updated=0 already_ok=66 failed_put=0
 Dieses separate Script dient ausschließlich der Extrahierung der Termine für die Müllabholung in meiner Straße in meiner Gemeinde. Die Termine werden dann als ICS-File zur Verfügung gestellt, welche dann einfach in beliebige Applikationen geladen werden können. Das Script könnte aber auch leicht an andere Lokationen angepasst werden, solange die Gemeinde ihre Dienste via der citiesapp anbietet.
 
 ```bash
-(.venv) airflow@AQUARIUS:~/Documents/python-projekte/nextcloud-calendar-tools$ python gemini.py
+(.venv)$ python waste-extraction.py
 Rufe API auf: https://api.v2.citiesapps.com/waste-management/areas/6761584e36764e06d7104231/calendar
 Status Code: 200
 
@@ -54,7 +54,7 @@ ICS-Datei 'muelltermine.ics' mit 8 Terminen erfolgreich erstellt.
 Dieses Skript extrahiert die "Ausg'steckt is"-Termine des Heurigenkalenders der Gemeinde und speichert sie in einer `heurigen.ics`-Datei.
 
 ```bash
-(.venv) airflow@AQUARIUS:~/Documents/python-projekte/nextcloud-calendar-tools$ python heurigen-extraction.py 
+(.venv)$ python heurigen-extraction.py 
 Versuche, die aktuelle build-version von https://bad-fischau-brunn.at/wirtschaft/heurigenkalender abzurufen...
 Aktuelle build-version gefunden: 20251105143942-b347190a6352d885b1cfd4ddd96969d2ed269444
 
