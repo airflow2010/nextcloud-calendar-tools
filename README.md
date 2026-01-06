@@ -15,7 +15,7 @@ Basic tools for pimping my typical tasks in NC calendar
 Das Umfärben der Kalendereinträge erfolgt gemäss den Regeln, die im Script selbst definiert sind (selbsterklärend). Welcher Kalender konkret bearbeitet wird, wird in .env festgelegt.
 
 ```bash
-(.venv) airflow@AQUARIUS:~/Documents/python-projekte/nextcloud-calendar-tools$ python main.py --debug --verbose
+(.venv)$ python main.py --debug --verbose
 Gefundene Kalenderobjekte: 365
 [DBG] HREF: https://<redacted>/remote.php/dav/calendars/airflow/privat/002ca65a-cd72-4895-83a5-4888470d484f.ics (ETag=d5262cf041cd9f9983e45a7bdaf31948)
 [DBG] HREF: https://<redacted>/remote.php/dav/calendars/airflow/privat/0123D740-D0A1-4CB1-8778-29CCF601B35B.ics (ETag=d0222d13286aad3d40c8761d3b6f70d4)
