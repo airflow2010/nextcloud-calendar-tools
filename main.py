@@ -50,6 +50,7 @@ RULES = [
     (r"^T8$",   "khaki", True),
     (r"^T7$",   "khaki", True),
     (r"^T6$",   "khaki", True),
+    (r"^T5$",   "khaki", True),
     (r"^N$",    "khaki", True),
     (r"^Teambesprechung$",   "khaki", True),
     # Weitere Beispiele:
