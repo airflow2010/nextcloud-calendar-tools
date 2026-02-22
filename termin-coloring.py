@@ -9,9 +9,9 @@ Nextcloud CalDAV/WebDAV Event-Formatter
 - .env Support (BASE_URL, CAL_NAME, USER, APP_PWD)
 
 Benutzung (Beispiel):
-  python main.py --dry-run --verbose
-  python main.py --force               # erzwingt Überschreiben auch wenn identisch
-  python main.py --limit 50            # nur 50 Objekte testen
+  python termin-coloring.py --dry-run --verbose
+  python termin-coloring.py --force               # erzwingt Überschreiben auch wenn identisch
+  python termin-coloring.py --limit 50            # nur 50 Objekte testen
 
 Konfig bevorzugt via .env:
   BASE_URL=https://share.4fp.at/remote.php/dav/calendars/airflow/
