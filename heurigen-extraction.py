@@ -1,5 +1,6 @@
 import json
 import sys
+import time
 import uuid
 from datetime import datetime, timedelta, timezone
 from urllib.parse import urljoin
@@ -18,27 +19,51 @@ API_QUERY_PARAMS = {
 
 ICS_FILENAME = "heurigen.ics"
 BASE_PAGE_URL = "https://bad-fischau-brunn.at/wirtschaft/heurigenkalender"
+BUILD_VERSION_REQUEST_TIMEOUT = (5, 20)
+BUILD_VERSION_MAX_ATTEMPTS = 3
 
 # --- Ende Konfiguration ---
 
-def get_dynamic_build_version(url):
-    """Fragt die Header der Webseite ab und extrahiert die build-version."""
-    print(f"Versuche, die aktuelle build-version von {url} abzurufen...")
-    try:
-        response = requests.head(url, timeout=10)
-        response.raise_for_status()
-        
-        build_version = response.headers.get('build-version')
+def get_header_case_insensitive(headers, header_name):
+    for key, value in headers.items():
+        if key.lower() == header_name.lower():
+            return value
+    return None
 
-        if build_version:
-            print(f"Aktuelle build-version gefunden: {build_version}")
-            return build_version
-        else:
-            print("WARNUNG: 'build-version' Header nicht in der Antwort gefunden!")
-            return None
-    except requests.exceptions.RequestException as e:
-        print(f"Fehler beim Abrufen der build-version: {e}")
-        return None
+
+def get_dynamic_build_version(url):
+    """Ermittelt die build-version robust per HEAD und GET mit Retries."""
+    print(f"Versuche, die aktuelle build-version von {url} abzurufen...")
+    last_error = None
+
+    for attempt in range(1, BUILD_VERSION_MAX_ATTEMPTS + 1):
+        for method in ("HEAD", "GET"):
+            print(f"Versuch {attempt}/{BUILD_VERSION_MAX_ATTEMPTS} via {method}...")
+            try:
+                response = requests.request(
+                    method,
+                    url,
+                    timeout=BUILD_VERSION_REQUEST_TIMEOUT,
+                    allow_redirects=True,
+                )
+                response.raise_for_status()
+
+                build_version = get_header_case_insensitive(response.headers, "build-version")
+                if build_version:
+                    print(f"Aktuelle build-version gefunden: {build_version}")
+                    return build_version
+
+                print(f"WARNUNG: 'build-version' Header bei {method} nicht gefunden.")
+            except requests.exceptions.RequestException as e:
+                last_error = e
+                print(f"Fehler bei {method} für build-version: {e}")
+
+        if attempt < BUILD_VERSION_MAX_ATTEMPTS:
+            time.sleep(attempt)
+
+    if last_error:
+        print(f"Letzter Fehler beim Abrufen der build-version: {last_error}")
+    return None
 
 # 1. Dynamisch die build-version holen
 dynamic_build_version = get_dynamic_build_version(BASE_PAGE_URL)
