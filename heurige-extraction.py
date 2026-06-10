@@ -39,7 +39,7 @@ API_BASE_URL = "https://api.v2.citiesapps.com/"
 ENV_BASE_URL = os.getenv("BASE_URL", "").rstrip("/")
 if ENV_BASE_URL:
     ENV_BASE_URL += "/"
-ENV_CAL_WASTE = os.getenv("CAL_WASTE", "")
+ENV_CAL_HEURIG = os.getenv("CAL_HEURIG", "")
 ENV_USER = os.getenv("USER", "")
 ENV_APP_PWD = os.getenv("APP_PWD", "")
 
@@ -642,10 +642,10 @@ def compare_with_online_calendar(ics_path, cfg, year=None):
 
 def build_arg_parser():
     parser = argparse.ArgumentParser(description="Heurigenkalender exportieren oder mit CalDAV vergleichen")
-    parser.add_argument("--compare", action="store_true", help="lokale ICS-Datei mit dem CAL_WASTE-CalDAV-Kalender vergleichen")
+    parser.add_argument("--compare", action="store_true", help="lokale ICS-Datei mit dem CAL_HEURIG-CalDAV-Kalender vergleichen")
     parser.add_argument("--ics-file", default=ICS_FILENAME, help=f"lokale ICS-Datei (Default: {ICS_FILENAME})")
     parser.add_argument("--base-url", default=ENV_BASE_URL, help="z.B. https://host/remote.php/dav/calendars/<user>/")
-    parser.add_argument("--calendar", default=ENV_CAL_WASTE, help="Kalenderordner fuer den Vergleich (Default: CAL_WASTE)")
+    parser.add_argument("--calendar", default=ENV_CAL_HEURIG, help="Kalenderordner fuer den Vergleich (Default: CAL_HEURIG)")
     parser.add_argument("--user", default=ENV_USER, help="Nextcloud Username")
     parser.add_argument("--app-pwd", default=ENV_APP_PWD, help="App-Passwort (Geraetepasswort) fuer API")
     parser.add_argument("--year", type=int, help="Vergleich auf dieses Kalenderjahr einschraenken")
@@ -659,7 +659,7 @@ def main():
 
     if args.compare:
         if not args.base_url or not args.calendar or not args.user or not args.app_pwd:
-            sys.exit("Fehlende Konfiguration (BASE_URL, CAL_WASTE, USER, APP_PWD). Per .env oder CLI uebergeben.")
+            sys.exit("Fehlende Konfiguration (BASE_URL, CAL_HEURIG, USER, APP_PWD). Per .env oder CLI uebergeben.")
 
         cfg = CalDavConfig(
             base_url=args.base_url.rstrip("/") + "/",
