@@ -555,38 +555,22 @@ def diff_events(left_events, right_events):
     return sorted(left_only, key=lambda event: (event.key.dtstart, event.summary, event.key.dtend))
 
 
-def event_years(event):
-    if event.start_value is None:
-        return set()
+def event_start_date(event):
+    if isinstance(event.start_value, datetime):
+        start_value = event.start_value
+        if start_value.tzinfo and EVENT_TIMEZONE:
+            start_value = start_value.astimezone(EVENT_TIMEZONE)
+        return start_value.date()
 
-    start_date = event.start_value.date() if isinstance(event.start_value, datetime) else event.start_value
-    if not isinstance(start_date, date):
-        return set()
+    if isinstance(event.start_value, date):
+        return event.start_value
 
-    end_value = event.end_value
-    if isinstance(end_value, datetime):
-        end_date = end_value.date()
-    elif isinstance(end_value, date):
-        end_date = end_value
-        if end_date > start_date:
-            end_date -= timedelta(days=1)
-    else:
-        end_date = start_date
-
-    if end_date < start_date:
-        end_date = start_date
-
-    return set(range(start_date.year, end_date.year + 1))
+    return None
 
 
 def event_start_year(event):
-    if isinstance(event.start_value, datetime):
-        return event.start_value.year
-
-    if isinstance(event.start_value, date):
-        return event.start_value.year
-
-    return None
+    start_date = event_start_date(event)
+    return start_date.year if start_date else None
 
 
 def relevant_years_from_events(events):
@@ -598,12 +582,50 @@ def relevant_years_from_events(events):
     return years
 
 
-def filter_events_for_years(events, years):
-    return [event for event in events if event_years(event) & years]
+def comparison_windows_from_local_events(events, years):
+    windows = {}
+    for event in events:
+        start_date = event_start_date(event)
+        if not start_date or start_date.year not in years:
+            continue
+
+        current_start = windows.get(start_date.year)
+        if current_start is None or start_date < current_start:
+            windows[start_date.year] = start_date
+
+    return {
+        year: (start_date, date(year + 1, 1, 1))
+        for year, start_date in sorted(windows.items())
+    }
+
+
+def filter_events_for_windows(events, windows):
+    filtered = []
+    for event in events:
+        start_date = event_start_date(event)
+        if not start_date:
+            continue
+
+        window = windows.get(start_date.year)
+        if not window:
+            continue
+
+        start_date_inclusive, end_date_exclusive = window
+        if start_date_inclusive <= start_date < end_date_exclusive:
+            filtered.append(event)
+
+    return filtered
 
 
 def format_years(years):
     return ", ".join(str(year) for year in sorted(years))
+
+
+def format_comparison_windows(windows):
+    return ", ".join(
+        f"{format_date(start_date)} bis {format_date(end_date - timedelta(days=1))}"
+        for start_date, end_date in windows.values()
+    )
 
 
 def print_event_list(title, events):
@@ -626,14 +648,19 @@ def compare_with_online_calendar(ics_path, cfg, year=None):
     if not relevant_years:
         sys.exit("Kein Vergleichsjahr gefunden: lokale ICS-Datei enthaelt keine datierten Termine.")
 
-    local_events = filter_events_for_years(local_events, relevant_years)
-    online_events = filter_events_for_years(online_events, relevant_years)
+    comparison_windows = comparison_windows_from_local_events(local_events, relevant_years)
+    if not comparison_windows:
+        sys.exit("Kein Vergleichszeitraum gefunden: lokale ICS-Datei enthaelt keine Termine im Vergleichsjahr.")
+
+    local_events = filter_events_for_windows(local_events, comparison_windows)
+    online_events = filter_events_for_windows(online_events, comparison_windows)
 
     only_local = diff_events(local_events, online_events)
     only_online = diff_events(online_events, local_events)
 
     print("\n--- Vergleich heurigen.ics <-> CalDAV ---")
     print(f"Vergleichsjahr: {format_years(relevant_years)}")
+    print(f"Vergleichszeitraum: {format_comparison_windows(comparison_windows)}")
     print(f"Termine im Letztstand: {len(local_events)}")
     print(f"Termine im Online-Altstand: {len(online_events)}")
     print_event_list("Neu hinzugekommene Termine", only_local)

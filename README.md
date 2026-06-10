@@ -77,7 +77,7 @@ Status Code: 200
 ICS-Datei 'heurigen.ics' mit 4 Terminen erfolgreich erstellt.
 ```
 
-Mit `--compare` wird eine vorhandene lokale ICS-Datei als Letztstand mit dem in `.env` unter `CAL_HEURIG` konfigurierten CalDAV-Kalender verglichen. Benoetigt werden `BASE_URL`, `CAL_HEURIG`, `USER` und `APP_PWD`. Das Vergleichsjahr wird aus der lokalen ICS-Datei abgeleitet und kann bei Bedarf mit `--year` explizit gesetzt werden.
+Mit `--compare` wird eine vorhandene lokale ICS-Datei als Letztstand mit dem in `.env` unter `CAL_HEURIG` konfigurierten CalDAV-Kalender verglichen. Benoetigt werden `BASE_URL`, `CAL_HEURIG`, `USER` und `APP_PWD`. Das Vergleichsjahr wird aus der lokalen ICS-Datei abgeleitet und kann bei Bedarf mit `--year` explizit gesetzt werden. Verglichen werden nur Termine ab dem fruehesten Termin der lokalen ICS-Datei bis zum Ende des jeweiligen Kalenderjahrs.
 
 ```bash
 (.venv)$ python heurige-extraction.py --compare
@@ -86,6 +86,7 @@ Lade CalDAV-Kalender: <CAL_HEURIG>
 
 --- Vergleich heurigen.ics <-> CalDAV ---
 Vergleichsjahr: 2026
+Vergleichszeitraum: 15.01.2026 bis 31.12.2026
 Termine im Letztstand: 4
 Termine im Online-Altstand: 4
 
