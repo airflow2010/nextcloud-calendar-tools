@@ -49,12 +49,12 @@ Filter aktiv für: Restmüll, Papier, Gelber Sack
 ICS-Datei 'muelltermine.ics' mit 8 Terminen erfolgreich erstellt.
 ```
 
-### heurigen-extraction.py (Termine für Heurige)
+### heurige-extraction.py (Termine für Heurige)
 
 Dieses Skript extrahiert die "Ausg'steckt is"-Termine des Heurigenkalenders der Gemeinde und speichert sie in einer `heurigen.ics`-Datei.
 
 ```bash
-(.venv)$ python heurigen-extraction.py 
+(.venv)$ python heurige-extraction.py 
 Versuche, die aktuelle build-version von https://bad-fischau-brunn.at/wirtschaft/heurigenkalender abzurufen...
 Aktuelle build-version gefunden: 20251105143942-b347190a6352d885b1cfd4ddd96969d2ed269444
 
