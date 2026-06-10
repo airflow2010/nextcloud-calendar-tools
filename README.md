@@ -10,6 +10,10 @@ Basic tools for pimping my typical tasks in NC calendar
 
 ## Anwendung
 
+### Konfiguration
+
+Die Datei `.env` enthaelt lokale Zugangsdaten und wird deshalb nicht versioniert. Als Vorlage gibt es `.env.example`; kopiere diese Datei nach `.env` und ergaenze dort `BASE_URL`, `USER`, `APP_PWD` sowie die verwendeten Kalendernamen.
+
 ### termin-coloring.py (Kalendereinträge umfärben)
 
 Das Umfärben der Kalendereinträge erfolgt gemäss den Regeln, die im Script selbst definiert sind (selbsterklärend). Welcher Kalender konkret bearbeitet wird, wird in .env festgelegt.
